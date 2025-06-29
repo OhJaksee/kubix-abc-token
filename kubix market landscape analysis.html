@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubix ABC Token - Market Strategy & Persona Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .strategy-sections {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            border-left: 6px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .section-1 { border-left-color: #17a2b8; }
+        .section-2 { border-left-color: #1e3c72; }
+        .section-3 { border-left-color: #17a2b8; }
+        .section-4 { border-left-color: #2a5298; }
+        .section-5 { border-left-color: #17a2b8; }
+        .section-6 { border-left-color: #1e3c72; }
+
+        .section-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-number {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        /* Competitor Matrix */
+        .competitor-matrix {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .matrix-table th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .matrix-table tr:hover {
+            background: #f1f8ff;
+        }
+
+        .highlight-row {
+            background: linear-gradient(135deg, #17a2b8, #20c997) !important;
+            color: white;
+            font-weight: 600;
+        }
+
+        .highlight-row:hover {
+            background: linear-gradient(135deg, #138496, #1e7e34) !important;
+        }
+
+        /* Personas */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .persona-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .persona-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .persona-1 { border-color: #17a2b8; }
+        .persona-2 { border-color: #1e3c72; }
+        .persona-3 { border-color: #17a2b8; }
+        .persona-4 { border-color: #2a5298; }
+
+        .persona-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .persona-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1e3c72;
+        }
+
+        .persona-details {
+            font-size: 1em;
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .persona-stats {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        /* Pain Points */
+        .pain-points-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pain-point {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #17a2b8;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .pain-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .solution {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* Media Strategy */
+        .media-strategy {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #17a2b8;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .strategy-card:hover {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .strategy-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .strategy-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Funnel Mapping */
+        .funnel-table {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            overflow-x: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .funnel-grid {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .funnel-grid th,
+        .funnel-grid td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+
+        .funnel-grid th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            font-weight: 600;
+        }
+
+        .funnel-stage {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Messaging */
+        .messaging-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .message-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .message-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .message-1 { border-color: #17a2b8; }
+        .message-2 { border-color: #1e3c72; }
+        .message-3 { border-color: #17a2b8; }
+        .message-4 { border-color: #2a5298; }
+
+        .thai-text {
+            font-weight: 600;
+            color: #1e3c72;
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .objective-highlight {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-box {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .strategy-sections {
+                padding: 20px;
+            }
+            
+            .personas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pain-points-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .media-strategy {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Kubix ABC Token Strategy</h1>
+            <p>Commodity-Backed Digital Token for Thai Retail Investors</p>
+        </div>
+
+        <div class="strategy-sections">
+            <!-- Section 1: Competitor Matrix -->
+            <div class="section section-1">
+                <div class="section-title">
+                    <div class="section-number">1</div>
+                    <span>📊 Competitor & Alternative Investment Matrix</span>
+                </div>
+                
+                <div class="competitor-matrix">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>Platform/Product</th>
+                                <th>Min. Investment</th>
+                                <th>Return</th>
+                                <th>Risk Level</th>
+                                <th>Key Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><strong>🎯 ABC Token (Kubix)</strong></td>
+                                <td>10,000 THB</td>
+                                <td>Fixed + Bonus</td>
+                                <td>Low–Medium</td>
+                                <td>Only commodities-focused token in market</td>
+                            </tr>
+                            <tr>
+                                <td>G-Token</td>
+                                <td>100 THB</td>
+                                <td>>1.5%</td>
+                                <td>Very Low</td>
+                                <td>SEC-backed, very mass market</td>
+                            </tr>
+                            <tr>
+                                <td>Token X (SCBX)</td>
+                                <td>10,000–100,000+ THB</td>
+                                <td>4–6%</td>
+                                <td>Low–Medium</td>
+                                <td>Real estate focus, int'l expansion</td>
+                            </tr>
+                            <tr>
+                                <td>RealX</td>
+                                <td>~10,000 THB</td>
+                                <td>4–5% (1–5 yrs)</td>
+                                <td>Medium</td>
+                                <td>Condo-backed, real estate yield</td>
+                            </tr>
+                            <tr>
+                                <td>REITs (FTREIT)</td>
+                                <td>High (125M THB)</td>
+                                <td>~4–5%</td>
+                                <td>Low</td>
+                                <td>Tax benefit until end of 2024</td>
+                            </tr>
+                            <tr>
+                                <td>Private Funds</td>
+                                <td>10M THB</td>
+                                <td>High</td>
+                                <td>Low</td>
+                                <td>High-barrier, private wealth</td>
+                            </tr>
+                            <tr>
+                                <td>P2P Lending</td>
+                                <td>5,000+ THB</td>
+                                <td>8–15%</td>
+                                <td>High</td>
+                                <td>Credit risk, sandbox regulated</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="objective-highlight">
+                    <strong>🎯 ABC Token Sweet Spot:</strong> Accessible retail entry (10,000 THB) • Safer than P2P/structured notes • Only commodities-focused token • Stronger credibility than competitors
+                </div>
+            </div>
+
+            <!-- Section 2: Audience Mapping -->
+            <div class="section section-2">
+                <div class="section-title">
+                    <div class="section-number">2</div>
+                    <span>👥 Audience Mapping (Persona Analysis)</span>
+                </div>
+                
+                <div class="personas-grid">
+                    <div class="persona-card persona-1">
+                        <div class="persona-icon">🛡️</div>
+                        <div class="persona-title">Low-Risk Lover</div>
+                        <div class="persona-stats">
+                            <strong>30% of Target Market</strong>
+                        </div>
+                        <div class="persona-details">
+                            <strong>Budget:</strong> 100–300K THB<br>
+                            <strong>Tech:</strong> Medium-Low<br>
+                            <strong>Pain:</strong> Fear of scams, prefer simplicity<br>
+                            <strong>Driver:</strong> Trust & Stability
+                        </div>
+                    </div>
+                    
+                    <div class="persona-card persona-2">
+                        <div class="persona-icon">📈</div>
+                        <div class="persona-title">Fixed Return Planner</div>
+                        <div class="persona-stats">
+                            <strong>30% of Target Market</strong>
+                        </div>
+                        <div class="persona-details">
+                            <strong>Budget:</strong> 100K–3M THB<br>
+                            <strong>Tech:</strong> Medium<br>
+                            <strong>Pain:</strong> Market volatility fear<br>
+                            <strong>Driver:</strong> Predictable Returns
+                        </div>
+                    </div>
+                    
+                    <div class="persona-card persona-3">
+                        <div class="persona-icon">💎</div>
+                        <div class="persona-title">Wealthy Senior</div>
+                        <div class="persona-stats">
+                            <strong>20% of Target Market</strong>
+                        </div>
+                        <div class="persona-details">
+                            <strong>Budget:</strong> 1M+ THB<br>
+                            <strong>Tech:</strong> Medium-Low<br>
+                            <strong>Pain:</strong> Need detailed explanations<br>
+                            <strong>Driver:</strong> Wealth Preservation
+                        </div>
+                    </div>
+                    
+                    <div class="persona-card persona-4">
+                        <div class="persona-icon">🚀</div>
+                        <div class="persona-title">Upper-Class Millennial</div>
+                        <div class="persona-stats">
+                            <strong>20% of Target Market</strong>
+                        </div>
+                        <div class="persona-details">
+                            <strong>Budget:</strong> <100K THB<br>
+                            <strong>Tech:</strong> High<br>
+                            <strong>Pain:</strong> Fear of fraud, want to try new things<br>
+                            <strong>Driver:</strong> Innovation & Growth
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-row">
+                    <div class="metric-box">
+                        <div class="metric-number">60%</div>
+                        <div class="metric-label">Primary Target<br>(Age 35-60)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">40%</div>
+                        <div class="metric-label">Secondary Target<br>(High Growth/HNW)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Pain Points & Decision Drivers -->
+            <div class="section section-3">
+                <div class="section-title">
+                    <div class="section-number">3</div>
+                    <span>⚡ Pain Points & Decision Drivers</span>
+                </div>
+                
+                <div class="pain-points-grid">
+                    <div class="pain-point">
+                        <div class="pain-title">😰 Fear of Market Scams</div>
+                        <p>Thai investors are highly sensitive to investment fraud</p>
+                        <div class="solution">
+                            ✅ Emphasize SEC-approval, backed by real commodity
+                        </div>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <div class="pain-title">🤔 Don't Understand Digital Tokens</div>
+                        <p>Low familiarity with tokenized investments</p>
+                        <div class="solution">
+                            ✅ Visual, short-form explainers: "ลงทุนยังไง ได้อะไร คืนเมื่อไหร่"
+                        </div>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <div class="pain-title">📊 No Clear ROI Timeline</div>
+                        <p>Want transparent return expectations</p>
+                        <div class="solution">
+                            ✅ Show Fixed % p.a. + Bonus Timeline in plain Thai
+                        </div>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <div class="pain-title">🔒 Concern About Lock-in</div>
+                        <p>Worried about liquidity and exit options</p>
+                        <div class="solution">
+                            ✅ Clarify "ถือ 3 ปี = ได้โบนัส" vs "ขายก่อนก็ได้แต่…"
+                        </div>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <div class="pain-title">🏢 Too Many New Platforms</div>
+                        <p>Platform fatigue and trust issues</p>
+                        <div class="solution">
+                            ✅ Position Kubix as trusted, top-tier ICO portal
+                        </div>
+                    </div>
+                    
+                    <div class="pain-point">
+                        <div class="pain-title">💰 Low Financial Literacy</div>
+                        <p>Need education-first approach</p>
+                        <div class="solution">
+                            ✅ Focus on tangible backing (commodities > abstract concepts)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: High-Level Media Strategy -->
+            <div class="section section-4">
+                <div class="section-title">
+                    <div class="section-number">4</div>
+                    <span>📣 High-Level Media Strategy Direction</span>
+                </div>
+                
+                <div class="objective-highlight">
+                    <strong>🎯 Objective:</strong> Acquire 10,000 KYC Accounts → 7,000+ Subscriptions | ⏱️ Timeline: 2 Months (Late Q3–Early Q4)
+                </div>
+                
+                <div class="media-strategy">
+                    <div class="strategy-card pulse">
+                        <div class="strategy-icon">📱</div>
+                        <div class="strategy-title">Meta Ads</div>
+                        <p>Focus on Lookalike audiences of RealX, SCB Easy App, Bitkub users</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <div class="strategy-icon">🎬</div>
+                        <div class="strategy-title">YouTube Shorts / TikTok</div>
+                        <p>"ลงทุนอะไรได้ผลตอบแทนมั่นคง?" style content</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <div class="strategy-icon">🔍</div>
+                        <div class="strategy-title">Google Display</div>
+                        <p>Contextual targeting: "ลงทุน", "พันธบัตร", "ผลตอบแทน"</p>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <div class="strategy-icon">💬</div>
+                        <div class="strategy-title">LINE / Email Retargeting</div>
+                        <p>Boost recall, use urgency in messaging</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Persona x Funnel Strategy Mapping -->
+            <div class="section section-5">
+                <div class="section-title">
+                    <div class="section-number">5</div>
+                    <span>🎯 Persona x Funnel Strategy Mapping</span>
+                </div>
+                
+                <div class="funnel-table">
+                    <table class="funnel-grid">
+                        <thead>
+                            <tr>
+                                <th>Funnel Stage</th>
+                                <th>Target Persona</th>
+                                <th>Media Channels</th>
+                                <th>Message Angle</th>
+                                <th>Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="funnel-stage">Awareness</td>
+                                <td>All 4 Personas</td>
+                                <td>Meta (IG, FB), Display, TikTok</td>
+                                <td>"ลงทุนแบบมีทรัพย์สินค้ำ - ผลตอบแทนชัดเจน"</td>
+                                <td>Short-form video, carousels</td>
+                            </tr>
+                            <tr>
+                                <td class="funnel-stage">Consideration</td>
+                                <td>Fixed Return, Low-Risk</td>
+                                <td>YouTube, GDN, Native</td>
+                                <td>"ลงทุนง่าย เริ่มต้น 10,000 ได้ผลตอบแทนรายปี"</td>
+                                <td>Explainer, case study</td>
+                            </tr>
+                            <tr>
+                                <td class="funnel-stage">Conversion</td>
+                                <td>Fixed Return, Wealthy Senior</td>
+                                <td>LINE OA, Email, Retargeting</td>
+                                <td>"เปิดบัญชีภายใน 7 วัน รับสิทธิ์โบนัสแรกเข้า"</td>
+                                <td>Lead-gen ads, Direct CTA</td>
+                            </tr>
+                            <tr>
+                                <td class="funnel-stage">Education</td>
+                                <td>Upper-class Millennials</td>
+                                <td>TikTok, Twitter, Web3 communities</td>
+                                <td>"Token คืออะไร? ทำไมถึงปลอดภัย?"</td>
+                                <td>Short video, infographic</td>
+                            </tr>
+                            <tr>
+                                <td class="funnel-stage">Trust Building</td>
+                                <td>All Personas</td>
+                                <td>Website, 3rd-party PR, Partner LP</td>
+                                <td>"ได้รับการรับรองจาก ก.ล.ต. / ซื้อขายผ่านแพลตฟอร์มมาตรฐาน"</td>
+                                <td>SEC Badge, Explainer PDF</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 6: Key Creative Messaging -->
+            <div class="section section-6">
+                <div class="section-title">
+                    <div class="section-number">6</div>
+                    <span>💬 Key Creative Messaging</span>
+                </div>
+                
+                <div class="messaging-grid">
+                    <div class="message-card message-1">
+                        <div class="persona-title">🛡️ Low-Risk Lover</div>
+                        <div class="thai-text">
+                            "ลงทุนที่เข้าใจง่าย ผลตอบแทนชัดเจน<br>
+                            มีทรัพย์สินรองรับอย่างชัดเจน"
+                        </div>
+                        <div class="thai-text">
+                            "ได้รับการรับรองจาก ก.ล.ต.<br>
+                            พร้อมบริการ 1-on-1 Support"
+                        </div>
+                    </div>
+                    
+                    <div class="message-card message-2">
+                        <div class="persona-title">📈 Fixed Return Planner</div>
+                        <div class="thai-text">
+                            "ผลตอบแทนประจำทุกปี<br>
+                            พร้อมโบนัสเมื่อครบกำหนด 3 ปี"
+                        </div>
+                        <div class="thai-text">
+                            "ลดความผันผวน<br>
+                            สร้างรายได้ระยะยาว"
+                        </div>
+                    </div>
+                    
+                    <div class="message-card message-3">
+                        <div class="persona-title">💎 Wealthy Senior</div>
+                        <div class="thai-text">
+                            "โอกาสการลงทุนเฉพาะสำหรับคุณ"
+                        </div>
+                        <div class="thai-text">
+                            "ผลตอ
